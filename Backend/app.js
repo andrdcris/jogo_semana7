@@ -19,8 +19,9 @@ app.get('/', (req, res) => {
 
 
 app.post ('/resultado', (req, res) => {
+    res.header('Access-Control-Allow-Origin','*')
     console.log(req.body);
-    resultado = re.body;
+    resultado = req.body;
 });
 
 app.get ('/esp', (req,res) =>{
@@ -33,7 +34,7 @@ router.get('/limpa/dados', (req,res)=>{
 })
 
 app.use('/', router);
-app.listen(process.env.port || 3000);
+app.listen(process.env.port || 300);
 
 
 

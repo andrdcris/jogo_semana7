@@ -15,6 +15,7 @@ let positions = [
 ];
 
 function init() {
+  $.ajax({ url: "http://localhost:300/limpa/dados", method:"GET"});
   selected = [];
 
   currentPlayer.innerHTML = `JOGADOR DA VEZ: ${player}`;
@@ -52,7 +53,7 @@ function check() {
   for (pos of positions) {
     if (pos.every((item) => items.includes(item))) {
       $.ajax({
-        url: "http://localhost:3000/resultado", 
+        url: "http://localhost:300/resultado", 
         method: "POST", 
         data: {
           ganhador: playerLastMove
@@ -68,7 +69,7 @@ function check() {
     alert("DEU EMPATE!");
     playerLastMove ="DEU EMPATE";
     $.ajax({
-      url: "http://localhost:3000/resultado", 
+      url: "http://localhost:300/resultado", 
       method: "POST", 
       data: {
         ganhador: playerLastMove
@@ -77,9 +78,4 @@ function check() {
     init();
     return;
   }
-}
-
-function init(){
-  $.ajax({ url: "http://localhost:3000/limpa/dados", method:"GET"});
-  selected = [];
 }
