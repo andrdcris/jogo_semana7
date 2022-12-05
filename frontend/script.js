@@ -66,7 +66,6 @@ function check() {
   }
 
   if (selected.filter((item) => item).length === 9) {
-    alert("DEU EMPATE!");
     playerLastMove ="DEU EMPATE";
     $.ajax({
       url: "http://localhost:300/resultado", 
@@ -75,6 +74,7 @@ function check() {
         ganhador: playerLastMove
       }
     })
+    alert("DEU EMPATE!");
     init();
     return;
   }

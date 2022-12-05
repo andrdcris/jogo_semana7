@@ -20,8 +20,9 @@ app.get('/', (req, res) => {
 
 app.post ('/resultado', (req, res) => {
     res.header('Access-Control-Allow-Origin','*')
-    console.log(req.body);
+
     resultado = req.body;
+    console.log(resultado);
 });
 
 app.get ('/esp', (req,res) =>{

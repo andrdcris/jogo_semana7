@@ -2,18 +2,16 @@
 #include <HTTPClient.h>
 #include <WiFi.h>
 #include <ArduinoJson.h>
-#define led_amarelo 2
-#define led_azul 15
 
-const char *SSID = "Inteli-COLLEGE";
-const char *PASSWORD = "QazWsx@123";
+const char *SSID = "SHARE-RESIDENTE";
+const char *PASSWORD = "Share@residente";
 
 WiFiServer server(80);
 
 String getDataFromServer(){
   HTTPClient http;
   Serial.print('Posting..');
-  http.begin("http://10.128.64.65:300/esp");
+  http.begin("http://10.254.16.65:300/esp");
   http.addHeader("content-Type", "application/json");
 
   StaticJsonDocument<200> res;
@@ -25,15 +23,14 @@ String getDataFromServer(){
     deserializeJson(res, response);
 
   String resultado = res["ganhador"];
-  
-  return resultado;
+  return resultado;  
   }
 }
 
 void setup() {
-  pinMode(led_amarelo, OUTPUT);
-  pinMode(led_azul, OUTPUT);
   Serial.begin(115200);
+   pinMode(16, OUTPUT);
+  pinMode(18, OUTPUT);
   Serial.println();
   Serial.print("Connecting...");
   Serial.println(SSID);
@@ -50,19 +47,19 @@ void setup() {
 
 void loop() {
    String resultado = getDataFromServer();
+   Serial.println(" Resultado : ");
+   Serial.println(resultado);
 
-   if (resultado == "X"){
-     Serial.print("Ganhador: X");
-     digitalWrite(led_amarelo, HIGH);
-   } else if (resultado == "O"){
-     Serial.print("Ganhador: O");
-     digitalWrite(led_azul, HIGH);
-   } else if (resultado == "DEU EMPATE"){
-     Serial.print("Empate");
-     digitalWrite(led_azul, HIGH);
-     digitalWrite(led_amarelo, HIGH);
-   } else{
-     digitalWrite(led_azul, LOW);
-     digitalWrite(led_amarelo, LOW);
-   }
+  if (resultado == "X") {
+    digitalWrite(16, HIGH);
+  } else if (resultado == "O") {
+    digitalWrite(18, HIGH); 
+  } else if (resultado == "DEU EMPATE") {
+    digitalWrite(16, HIGH); 
+    digitalWrite(18, HIGH);
+  } else {
+    digitalWrite(16, LOW); 
+    digitalWrite(18, LOW);
+  }
+
 }
